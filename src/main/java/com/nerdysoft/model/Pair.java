@@ -30,6 +30,6 @@ public class Pair {
 
     @Override
     public String toString() {
-        return "("+x+","+y+")";
+        return "{x:"+x+",y:"+y+"}";
     }
 }

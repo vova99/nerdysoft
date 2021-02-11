@@ -3,6 +3,7 @@ package com.nerdysoft.controller;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.nerdysoft.model.Pair;
 import com.nerdysoft.model.Room;
+import com.nerdysoft.model.RoomDTO;
 import com.nerdysoft.storage.RoomStorage;
 import com.nerdysoft.validation.ValidateRoom;
 import jdk.nashorn.internal.ir.debug.JSONWriter;
@@ -76,11 +77,13 @@ public class MainController {
     @PostMapping("/validateRoom")
     public ResponseEntity<Object> validateRoom(@RequestBody Room room) throws JSONException {
         String hasError = ValidateRoom.validate(room.getRoom());
+        JSONObject jsonObject = new JSONObject();
         if (hasError.isEmpty()) {
             roomStorage.update(room);
-            return new ResponseEntity<>(room, HttpStatus.OK);
+            RoomDTO roomDTO = new RoomDTO();
+            roomDTO.setRoom(room.getRoom());
+            return new ResponseEntity<>(roomDTO, HttpStatus.OK);
         }else{
-            JSONObject jsonObject = new JSONObject();
             jsonObject.put("error",hasError);
             return new ResponseEntity<>(jsonObject.toString(), HttpStatus.BAD_REQUEST);
         }

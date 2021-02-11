@@ -40,11 +40,11 @@ public class ValidateRoom {
 
     public static String validate(List<Pair> pairs){
         if(pairs.size()>=4) {
-            if(!isClockwise(pairs)){
-                return "Clockwise error!";
-            }
             if(!isFiniteArea(pairs)){
                 return "Infinite area!";
+            }
+            if(!isClockwise(pairs)){
+                return "Clockwise error!";
             }
             for (int i = 1; i < pairs.size(); i++) {
                 int k=0;
@@ -60,7 +60,6 @@ public class ValidateRoom {
                         return "Lines intersects!";
                     }
                 }
-
                 if(isDiagonal(pairs.get(i-1),pairs.get(i))){
                     return "Diagonal error!";
                 }
